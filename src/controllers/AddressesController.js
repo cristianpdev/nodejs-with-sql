@@ -2,6 +2,14 @@ import Address from '../models/Address'
 import User from '../models/User'
 
 export default {
+    async index(req, res) {
+        const { user_id } = req.params
+        const user = await User.findByPk(user_id, {
+            include: { association: 'addresses' }
+        })
+
+        return res.json(user)
+    },
     async store(req, res) {
         const { user_id } = req.params
         const { zipcode, street, number } = req.body
